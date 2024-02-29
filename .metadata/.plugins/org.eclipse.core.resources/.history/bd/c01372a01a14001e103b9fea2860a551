@@ -1,0 +1,14 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+  <hibernate-mapping> 
+ <class name="HibernateDemo.DemoXml.Pojo.projectManyToMany" >
+ <id name="projectId">
+  <generator class="assigned"></generator>
+ </id>
+ <property name="projectName"  length="25" > </property>
+ <property name="stDate"   > </property>
+ <property name="eddate"  > </property>
+
+ </class>
+ </hibernate-mapping>

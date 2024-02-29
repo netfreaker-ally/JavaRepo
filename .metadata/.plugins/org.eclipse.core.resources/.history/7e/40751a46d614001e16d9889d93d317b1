@@ -1,0 +1,27 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="HibernateDemo.DemoXml.Pojo.employeProject">
+    <composite-id name="compositeKey" class="HibernateDemo.DemoXml.Pojo.empProjectComposite">
+      <key-many-to-one name="empNo" class="HibernateDemo.DemoXml.Pojo.EmpManyToMany">
+        <column name="Employee_NO" />
+      </key-many-to-one>
+      <key-many-to-one name="projectId" class="HibernateDemo.DemoXml.Pojo.projectManyToMany">
+        <column name="Project_ID" />
+      </key-many-to-one>
+      <key-property name="stdate">
+        <column name="Start_Date" />
+      </key-property>
+    </composite-id>
+    <property name="edDate">
+      <column name="End_Date" />
+    </property>
+    <property name="stdate" insert="false" update="false">
+  <column name="Start_Date" />
+</property>   
+  </class>
+</hibernate-mapping>
+<!-- the <property> element with the name stdate is added. The insert and update attributes
+ are set to false to indicate that the stdate field should not be inserted or updated directly. 
+The <column> element specifies the column name in the database table that represents the foreign key, which is also named stdate. -->

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<section name="Workbench">
+	<list key="CommitDialog.authorValues">
+		<item value="hanuma.ramavath &lt;hanuma.ramavath@TWDSDL-136.in.techwave.net&gt;"/>
+	</list>
+	<list key="CommitDialog.committerValues">
+		<item value="hanuma.ramavath &lt;hanuma.ramavath@TWDSDL-136.in.techwave.net&gt;"/>
+	</list>
+	<list key="EGit.KnownHosts">
+		<item value="git.eclipse.org"/>
+		<item value="github.com"/>
+		<item value="bitbucket.org"/>
+	</list>
+	<section name="org.eclipse.egit.ui.internal.staging.StagingView">
+		<item key="MAIN_SASH_FORM_ORIENTATION_VERTICAL" value="false"/>
+		<item key="HORIZONTAL_SASH_FORM_WEIGHT" value="500,500"/>
+		<item key="STAGING_SASH_FORM_WEIGHT" value="500,500"/>
+		<item key="sortItemState" value="false"/>
+	</section>
+	<section name="GitCommitMessageComponent">
+		<list key="C:\Users\hanuma.ramavath\OneDrive - TECHWAVE\Desktop\JAVA\OOPSConceptss\.git">
+			<item value="true"/>
+			<item value="hanuma.ramavath &lt;hanuma.ramavath@TWDSDL-136.in.techwave.net&gt;"/>
+			<item value="hi&#x0D;&#x0A;&#x0D;&#x0A;Change-Id: I0000000000000000000000000000000000000000&#x0D;&#x0A;"/>
+			<item value="hanuma.ramavath &lt;hanuma.ramavath@TWDSDL-136.in.techwave.net&gt;"/>
+			<item value="805e54de9df19f8392617ddb635ae05000d580a4"/>
+			<item value="0"/>
+			<item value="true"/>
+			<item value=""/>
+		</list>
+	</section>
+	<section name="org.eclipse.egit.ui.internal.dialogs.DeleteBranchDialog.dialogBounds">
+		<item key="DIALOG_X_ORIGIN" value="232"/>
+		<item key="DIALOG_Y_ORIGIN" value="190"/>
+		<item key="DIALOG_WIDTH" value="538"/>
+		<item key="DIALOG_HEIGHT" value="484"/>
+		<item key="DIALOG_FONT_NAME" value="1|Segoe UI|9.0|0|WINDOWS|1|-12|0|0|0|400|0|0|0|1|0|0|0|0|Segoe UI"/>
+	</section>
+</section>

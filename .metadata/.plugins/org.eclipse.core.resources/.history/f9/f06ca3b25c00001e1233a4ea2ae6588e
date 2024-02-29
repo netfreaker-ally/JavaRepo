@@ -1,0 +1,88 @@
+package Day10;
+
+interface Ideposit{
+	String Credit(double amount);
+	String debit(double amount);
+	String DisplayBalance();
+	
+}
+class SavingsAccount implements Ideposit{
+	String accNo;
+	String accname;
+	double balance;
+	
+	public SavingsAccount(String accNo, String accname, double balance) {
+		super();
+		this.accNo = accNo;
+		this.accname = accname;
+		this.balance = balance;
+	}
+	@Override
+	public String Credit(double amount) {
+		// TODO Auto-generated method stub
+		balance+=amount;
+		return amount+"deposited your balance is"+balance;
+	}
+	@Override
+	public String  debit(double amount) {
+		// TODO Auto-generated method stub
+		if(balance>amount) {
+			balance-=amount;
+			return amount+"deposited your balance is"+balance;
+		}else {
+			return "No Sufficient Funds";
+		}
+	}
+	@Override
+	public String DisplayBalance() {
+		// TODO Auto-generated method stub
+		return "Account NO: "+accNo+"\nAccount Name: "+accname+"\nbalace: "+balance;
+	}
+}
+class CurrentAccount implements Ideposit{
+	String accNo;
+	String accname;
+	double balance;
+	 final  double minbal=1000;
+	
+	 public CurrentAccount(String accNo, String accname, double balance) {
+		super();
+		this.accNo = accNo;
+		this.accname = accname;
+		this.balance = balance;
+	}
+	@Override
+	public String Credit(double amount) {
+		// TODO Auto-generated method stub
+		balance+=amount;
+		return amount+"deposited your balance is"+balance;
+	}
+	@Override
+	public String debit(double amount) {
+		// TODO Auto-generated method stub
+		double amt;
+		if(balance-amount>minbal) {
+			balance-=amount;
+		
+		}else {
+			amt=(balance-amount-minbal)*10/100;
+			balance=balance-amount-amt;
+			
+		}
+		return amount+"debited your balance is"+balance;
+	}
+	@Override
+	public String DisplayBalance() {
+		// TODO Auto-generated method stub
+		return "Account NO: "+accNo+"\nAccount Name: "+accname+"\nbalace: "+balance;
+	}
+}
+public class InterfaceEx3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Ideposit i=new SavingsAccount("A001", "Hanu", 10000);
+		System.out.println(i.Credit(2000));
+	}
+
+}

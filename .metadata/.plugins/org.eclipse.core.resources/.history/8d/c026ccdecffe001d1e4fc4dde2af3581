@@ -1,0 +1,22 @@
+package Day6;
+
+class BaseClass{
+	static int a;
+	static {
+		System.out.println("Static Constructor");
+	}
+	public BaseClass() {
+		System.out.println("Baseclass default constuctors");
+	}
+	public BaseClass(int a) {
+		System.out.println("Parameterized Constructor");
+	}
+}
+public class StaticConstructors {
+	static {
+		System.out.println("Static Constuctor");
+	}
+public static void main(String[] args) {
+	BaseClass b=new BaseClass();
+}
+}

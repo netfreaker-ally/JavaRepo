@@ -1,0 +1,30 @@
+<!DOCTYPE hibernate-configuration PUBLIC
+	"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+	"http://www.hibernate.org/dtd/hibernate-configuration-3.0.dtd"><!--comment-->
+	<hibernate-configuration>
+	
+	<session-factory>
+	<property name="hibernate.connection.driver_class">oracle.jdbc.driver.OracleDriver</property>
+	<property name="hibernate.connection.url">jdbc:oracle:thin:@localhost:1521:orcl</property>
+	<property name="hibernate.connection.username">system</property>
+	<property name="hibernate.connection.password">Admin#123</property>
+	<property name="hibernate.dialect">org.hibernate.dialect.Oracle9iDialect</property>	 
+	<property name="hbm2ddl.auto">update</property>
+	<property name="show_sql">true</property>
+	<mapping class="HibernateDemo.Demo.pojo.ProjectDetails"/>
+	<mapping class="HibernateDemo.Demo.pojo.DeptAnnotation"/>
+	<mapping class="HibernateDemo.Demo.pojo.EmpAnnotation"/>
+	<mapping class="HibernateDemo.Demo.pojo.DeptAnnotation2"/>
+	<mapping class="HibernateDemo.Demo.pojo.EmpAnnotation2"/>
+	<mapping class="HibernateDemo.Demo.pojo.Emponetoone"/>
+	<mapping class="HibernateDemo.Demo.pojo.Addressonetoone"/>
+	<mapping class="HibernateDemo.Demo.pojo.Emponetoone2"/>
+	<mapping class="HibernateDemo.Demo.pojo.Addressonetoone2"/>
+	<mapping class="HibernateDemo.Demo.pojo.EmpManyToMany"/>
+	<mapping class="HibernateDemo.Demo.pojo.projectManyToMany"/>
+	<mapping class="HibernateDemo.Demo.pojo.EmpProjectsId"/>
+	<mapping class="HibernateDemo.Demo.pojo.EmpProjects"/>
+	
+	
+	</session-factory>
+	</hibernate-configuration>

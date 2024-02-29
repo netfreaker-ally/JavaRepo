@@ -1,0 +1,18 @@
+package HibernateDemo.Demo;
+
+import javax.persistence.TypedQuery;
+
+import org.hibernate.Session;
+
+public class namedApp {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Session session = getSessionFactory.getFactory().openSession();
+		TypedQuery query=session.getNamedQuery("getbyDeptno");
+		query.setParameter("dno",10);
+		
+		session.close();
+	}
+
+}

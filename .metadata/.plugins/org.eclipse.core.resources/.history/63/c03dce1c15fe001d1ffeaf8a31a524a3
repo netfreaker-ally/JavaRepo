@@ -1,0 +1,123 @@
+package Test;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+class Vehicle {
+    private String _registrationNo;
+    private String _name;
+    private String _type;
+    private double _weight;
+    private Ticket _ticket;
+
+    public Vehicle() {
+        // Default constructor
+    }
+
+    public Vehicle(String registrationNo, String name, String type, double weight, Ticket ticket) {
+        this._registrationNo = registrationNo;
+        this._name = name;
+        this._type = type;
+        this._weight = weight;
+        this._ticket = ticket;
+    }
+
+    public String get_type() {
+        return _type;
+    }
+
+    public Ticket get_ticket() {
+        return _ticket;
+    }
+
+    public String get_registrationNo() {
+        return _registrationNo;
+    }
+
+    public String get_name() {
+        return _name;
+    }
+
+    public double get_weight() {
+        return _weight;
+    }
+
+    public void Description() {
+        // Code for vehicle description
+    }
+
+    public Vehicle CreateVehicle(String detail) {
+        String[] det = detail.split(",");
+        if (det.length != 7) {
+            throw new IllegalArgumentException("Invalid input format");
+        }
+        String regno = det[0].trim();
+        String nm = det[1].trim();
+        String typ = det[2].trim();
+        double weight = Double.parseDouble(det[3].trim());
+        String tktNo = det[4].trim();
+        LocalDateTime l = LocalDateTime.parse(det[5].trim(), DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+        double cst = Double.parseDouble(det[6].trim());
+        Ticket t = new Ticket(tktNo, l, cst);
+        Vehicle v = new Vehicle(regno, nm, typ, weight, t);
+        return v;
+    }
+}
+
+class Ticket {
+    private String _ticketNo;
+    private LocalDateTime _parkedTime;
+    private double _cost;
+
+    public Ticket(String ticketNo, LocalDateTime parkedTime, double cost) {
+        this._ticketNo = ticketNo;
+        this._parkedTime = parkedTime;
+        this._cost = cost;
+    }
+
+    public String get_ticketNo() {
+        return _ticketNo;
+    }
+
+    public LocalDateTime get_parkedTime() {
+        return _parkedTime;
+    }
+
+    public double get_cost() {
+        return _cost;
+    }
+}
+
+class VehicleBo {
+    public Vehicle[] FindVehicle(Vehicle[] vehicleList, String type) {
+        int count = 0;
+        for (int i = 0; i < vehicleList.length; i++) {
+            if (type.equalsIgnoreCase(vehicleList[i].get_type())) {
+                count++;
+            }
+        }
+        Vehicle[] veh = new Vehicle[count];
+        int idx = 0;
+        for (int i = 0; i < veh.length; i++) {
+            if (type.equalsIgnoreCase(vehicleList[i].get_type())) {
+                veh[idx++] = vehicleList[i];
+            }
+        }
+        return veh;
+    }
+
+    public Vehicle[] FindVehicle(List<Vehicle> vehicleList, LocalDateTime parkedTime) {
+        List<Vehicle> matVeh = new ArrayList<>();
+        for (Vehicle vehicle : vehicleList) {
+            if (vehicle.get_ticket() != null && vehicle.get_ticket().get_parkedTime().isEqual(parkedTime)) {
+                matVeh.add(vehicle);
+            }
+        }
+        return matVeh.toArray(new Vehicle[matVeh.size()]);
+    }
+
+    public static Vehicle[] SortVehicles(Vehicle[] vehicleList) {
+        Arrays.sort(vehicleList, new Comparator<Vehicle>() {
+            @Override
+            public

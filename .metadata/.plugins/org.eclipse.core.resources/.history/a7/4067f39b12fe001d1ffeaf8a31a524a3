@@ -1,0 +1,211 @@
+package Test;
+import java.security.PublicKey;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+class Vehicle{
+	private String _registrationNo;
+	
+	public Vehicle(String _registrationNo, String _name, String _type, double _weight, Ticket _ticket) {
+	    this._registrationNo = _registrationNo;
+	    this._name = _name;
+	    this._type = _type;
+	    this._weight = _weight;
+	    this._ticket = _ticket;
+	}
+
+	public String get_type() {
+		return _type;
+	}
+	
+	public Ticket get_ticket() {
+		return _ticket;
+	}
+	
+
+	public String get_registrationNo() {
+		return _registrationNo;
+	}
+	public String get_name() {
+		return _name;
+	}
+	public double get_weight() {
+		return _weight;
+	}
+
+
+	private String _name;
+	private String _type;
+	private double _weight;
+	private Ticket _ticket;
+	public Vehicle() {
+		
+	}
+	
+	public void Description() {
+		
+	}
+	public Vehicle CreateVehicle(String detail) {
+		String[] det=detail.split(",");
+		if(det.length!=7) {
+			throw new IllegalArgumentException("Invalid input format");
+		}
+		String regno=det[0].trim();
+		String nm=det[1].trim();
+		String typ=det[2].trim();
+		double weight=Double.parseDouble(det[3].trim());
+		String tktNo=det[4].trim();
+		LocalDateTime l=LocalDateTime.parse(det[5].trim(),DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss"));
+		double cst=Double.parseDouble(det[6].trim());
+		Ticket t=new Ticket(tktNo, l, cst);
+		Vehicle v=new Vehicle(regno, nm, typ, weight, t);
+		return v;
+				
+		
+		
+	}
+	
+	
+}
+class Ticket{
+	private String _ticketNo;
+	public Ticket(String _ticketNo, LocalDateTime _parkedTime, double _cost) {
+	    this._ticketNo = _ticketNo;
+	    this._parkedTime = _parkedTime;
+	    this._cost = _cost;
+	}
+
+	public LocalDateTime get_parkedTime() {
+	    return _parkedTime;
+	}
+
+	private LocalDateTime _parkedTime;
+	
+	public String get_ticketNo() {
+		return _ticketNo;
+	}
+	public double get_cost() {
+		return _cost;
+	}
+	private double _cost;
+	Ticket(){
+		
+	}
+	
+	
+}
+class VehicleBo{
+	public Vehicle[] FindVehicle(Vehicle[] vehicleList, String type) {
+		int count=0;
+		for (int i = 0; i < vehicleList.length; i++) {
+			
+			if(type.equalsIgnoreCase(vehicleList[i].get_type())) {
+				count++;
+			}
+		}
+		Vehicle[] veh=new Vehicle[count];
+		int idx=0;
+		for (int i = 0; i < veh.length; i++) {
+			if(type.equalsIgnoreCase(vehicleList[i].get_type())) {
+				veh[idx++]=vehicleList[i];
+			}
+		}
+		
+		return veh;
+		
+	}
+	public Vehicle[] FindVehicle(List<Vehicle> vehicleList, LocalDateTime parkedTime) {
+		 List<Vehicle> matVeh = new ArrayList<>();
+
+	        for (Vehicle vehicle : vehicleList) {
+	            if (vehicle.get_ticket() != null && vehicle.get_ticket().get_parkedTime().isEqual(parkedTime)) {
+	                matVeh.add(vehicle);
+	            }
+	        }
+
+	        return matVeh.toArray(new Vehicle[matVeh.size()]);
+	    }
+	public static Vehicle[] SortVehicles(Vehicle[] vehicleList) {
+		
+		 Arrays.sort(vehicleList, new Comparator<Vehicle>() {
+	            @Override
+	            public int compare(Vehicle vehicle1, Vehicle vehicle2) {
+	                // Compare the parking time of the vehicles
+	                LocalDateTime pt1 = vehicle1.get_ticket().get_parkedTime();
+	                LocalDateTime pt2 = vehicle2.get_ticket().get_parkedTime();
+	                return pt1.compareTo(pt2);
+	            }
+	        });
+
+	        return vehicleList;
+	        
+		
+	}
+
+	
+}
+
+public class TestEx {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		System.out.println("Enter number of vehicles: ");
+		Scanner sc=new Scanner(System.in);
+		int n=sc.nextInt();
+		sc.nextLine();
+		Vehicle[] v=new Vehicle[n];
+		for (int i = 0; i < n; i++) {
+			System.out.println("Enter the details in format registrationNo , name , type , weight ,ticketNo ,parkedTime ,cost ");
+			String str=sc.nextLine();
+			v[i]=new Vehicle();
+			v[i]=v[i].CreateVehicle(str);
+			
+		}
+		System.out.println("Details of all vehivle: ");
+		for (int i = 0; i < v.length; i++) {
+			if (v[i].get_ticket() != null) {
+			    System.out.println(v[i].get_registrationNo() + " " + v[i].get_name() + " " + v[i].get_type() + " " + v[i].get_weight() + " " + v[i].get_ticket().get_ticketNo() + " " + v[i].get_ticket().get_parkedTime() + " " + v[i].get_ticket().get_cost());
+			} else {
+			    System.out.println(v[i].get_registrationNo() + " " + v[i].get_name() + " " + v[i].get_type() + " " + v[i].get_weight() + " Ticket: Not Issued");
+			}
+
+		}
+		System.out.println("Enter a search type: 1.By type\n2.By parked time\n3.Sort the vehicles");
+		VehicleBo vb=new VehicleBo();
+		int choice=sc.nextInt();
+		sc.nextLine();
+		if(choice==1) {
+			//Type
+			System.out.println("Enter the type of vehicle: ");
+			String s=sc.nextLine();
+			Vehicle[] veh=vb.FindVehicle(v,s );
+			System.out.println("By Type: ");
+			for (int i = 0; i < veh.length; i++) {
+				System.out.println("Registration No: "+veh[i].get_registrationNo()+"Name: "+veh[i].get_type()+"Type: "+veh[i].get_type()+"Weight: "+veh[i].get_weight()+"Ticket No: "+veh[i].get_ticket().get_ticketNo());
+			}
+		}
+		else if(choice==2) {
+			List<Vehicle> l1=Arrays.asList(v);
+			System.out.print("Enter a date and time (\"dd-MM-yyyy HH:mm:ss\"): ");
+	        String userInput = sc.nextLine();
+	        DateTimeFormatter d=DateTimeFormatter.ofPattern("\"dd-MM-yyyy HH:mm:ss\"");
+	        LocalDateTime ldt=LocalDateTime.parse(userInput, d);
+			Vehicle[] veh=vb.FindVehicle(l1, ldt);
+			for (int i = 0; i < veh.length; i++) {
+				System.out.println("Registration No: "+veh[i].get_registrationNo()+"Name: "+veh[i].get_type()+"Type: "+veh[i].get_type()+"Weight: "+veh[i].get_weight());
+			}
+		}
+		else if(choice==3) {
+			Vehicle[] veh=vb.SortVehicles(v);
+			System.out.println("Sorted Vehicles: ");
+			for (int i = 0; i < veh.length; i++) {
+				System.out.println(veh[i].get_registrationNo()+" "+veh[i].get_name()+" "+veh[i].get_type()+" "+veh[i].get_weight()+" "+veh[i].get_ticket().get_ticketNo()+" "+veh[i].get_ticket().get_parkedTime());
+			}
+		}
+		else {
+			System.out.println("Enter valid option: ");
+		}
+
+	}
+
+}

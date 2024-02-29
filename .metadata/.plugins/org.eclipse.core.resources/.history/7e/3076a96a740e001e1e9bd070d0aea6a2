@@ -1,0 +1,71 @@
+package JDBC;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class CallableEx1 {
+
+	public static void main(String[] args) {
+		Connection Con=dbConnection.getConnection();
+		CallableStatement cstmt=null;
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter empNo: ");
+		int eno=sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter eName: ");
+		String ename=sc.nextLine();
+		System.out.println("Enter desig: : ");
+		String job=sc.nextLine();
+		System.out.println("Enter mgr(int) ");
+		int mgr=sc.nextInt();
+		sc.nextLine();
+		DateTimeFormatter d=DateTimeFormatter.ofPattern("dd-MMM-yyyy");
+		System.out.println("Enter String in dd-MMM-yyyy: ");
+		LocalDate hiredate=LocalDate.parse(sc.nextLine(),d);
+		System.out.println("Enter sal: ");
+		int sal=sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter comm(int): ");
+		int comm=sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter deptNo: ");
+		int deptno=sc.nextInt();
+		sc.nextLine();
+		try {
+			cstmt=Con.prepareCall("{call sp_insert(?,?,?,?,?,?,?,?)}");
+			cstmt.setInt(1, eno);
+			cstmt.setString(2, ename);
+			cstmt.setString(3, job);
+			cstmt.setInt(4, mgr);
+			cstmt.setString(5, d.format(hiredate));
+			cstmt.setInt(6, sal);
+			cstmt.setInt(7, comm);
+			cstmt.setInt(8, deptno);
+			cstmt.execute();
+			System.out.println("Done");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			if(e.getMessage().contains("PK_EMP_NO"))
+				System.out.println("DUPLICATE KEY NOT ALLOWED");
+			else if(e.getMessage().contains("FK_DEPTNO"))
+				System.out.println("Enter only allowed dept numbers");
+		} 
+		
+		finally {
+			try {
+				Con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
+
+}

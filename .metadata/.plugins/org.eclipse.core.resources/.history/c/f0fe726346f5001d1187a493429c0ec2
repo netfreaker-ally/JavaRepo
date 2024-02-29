@@ -1,0 +1,43 @@
+package Day3;
+import java.util.*;
+class Emp{
+	private int empId;
+	private String eName;
+	private double basic;
+	
+
+public void Accept(int empId,String eName,double basic) {
+	this.empId=empId;
+	this.eName=eName;
+	this.basic=basic;
+	}
+public String print() {
+	String str="Employess Id: "+empId+"Employee Name: "+eName+"Basic: "+basic;
+	return str;
+}
+}
+public class ArrayExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Emp E[] =new Emp[5];
+		Scanner sc=new Scanner(System.in);
+		int empId;
+		String eName;
+		double basic;
+		for(int i=0;i<2;i++)
+		{
+		E[i]=new Emp();
+		System.out.println("Enter details of"+i+"th person");
+		empId=sc.nextInt();
+		sc.nextLine();
+		eName=sc.nextLine();
+		basic=sc.nextDouble();
+		E[i].Accept(empId, eName, basic);
+		}
+		for(int i=0;i<2;i++) {
+			System.out.println(E[i].print());
+		}
+
+	}
+}

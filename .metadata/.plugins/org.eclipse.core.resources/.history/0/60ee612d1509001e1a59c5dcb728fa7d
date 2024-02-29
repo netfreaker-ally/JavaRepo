@@ -1,0 +1,195 @@
+package Assignment9;
+
+import java.sql.*;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Employee {
+    private int empNo;
+    private String ename;
+    private String job;
+    private int mgr;
+    private LocalDate hireDate;
+    private double sal;
+    private double comm;
+    private int deptNo;
+
+    public Employee(int empNo, String ename, String job, int mgr, LocalDate hireDate, double sal, double comm, int deptNo) {
+        this.empNo = empNo;
+        this.ename = ename;
+        this.job = job;
+        this.mgr = mgr;
+        this.hireDate = hireDate;
+        this.sal = sal;
+        this.comm = comm;
+        this.deptNo = deptNo;
+    }
+
+    public int getEmpNo() {
+        return empNo;
+    }
+
+    public String getEname() {
+        return ename;
+    }
+
+    public String getJob() {
+        return job;
+    }
+
+    public int getMgr() {
+        return mgr;
+    }
+
+    public LocalDate getHireDate() {
+        return hireDate;
+    }
+
+    public double getSal() {
+        return sal;
+    }
+
+    public double getComm() {
+        return comm;
+    }
+
+    public int getDeptNo() {
+        return deptNo;
+    }
+
+    @Override
+    public String toString() {
+        return "Employee{" +
+                "empNo=" + empNo +
+                ", ename='" + ename + '\'' +
+                ", job='" + job + '\'' +
+                ", mgr=" + mgr +
+                ", hireDate=" + hireDate +
+                ", sal=" + sal +
+                ", comm=" + comm +
+                ", deptNo=" + deptNo +
+                '}';
+    }
+}
+
+public class Assignment9Ex4 {
+    private static Connection connection;
+
+    public static void main(String[] args) {
+        try {
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Driver Error");
+        }
+
+        try {
+            connection = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:orcl", "system", "Admin#123");
+        } catch (SQLException e) {
+            System.out.println("Connection Error");
+        }
+
+        try {
+            Scanner sc = new Scanner(System.in);
+            System.out.println("Enter your choice:");
+            System.out.println("1. Empno");
+            System.out.println("2. StartDate and EndDate");
+            int choice = sc.nextInt();
+
+            if (choice == 1) {
+                System.out.println("Enter Empno:");
+                int empno = sc.nextInt();
+                Employee employee = getEmployee(empno);
+                if (employee != null) {
+                    System.out.println(employee);
+                } else {
+                    System.out.println("Employee not found.");
+                }
+            } else if (choice == 2) {
+                System.out.println("Enter StartDate (yyyy-mm-dd):");
+                String startDateStr = sc.next();
+                System.out.println("Enter EndDate (yyyy-mm-dd):");
+                String endDateStr = sc.next();
+
+                LocalDate startDate = LocalDate.parse(startDateStr);
+                LocalDate endDate = LocalDate.parse(endDateStr);
+
+                List<Employee> employees = getEmployees(startDate, endDate);
+                if (!employees.isEmpty()) {
+                    for (Employee employee : employees) {
+                        System.out.println(employee);
+                    }
+                } else {
+                    System.out.println("No employees found within the specified dates.");
+                }
+            } else {
+                System.out.println("Invalid choice.");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            // Close the connection in the finally block
+            if (connection != null) {
+                try {
+                    connection.close();
+                } catch (SQLException e) {
+                    System.out.println("Error while closing connection: " + e.getMessage());
+                }
+            }
+        }
+    }
+
+    public static Employee getEmployee(int empno) {
+        Employee employee = null;
+        try {
+            String query = "SELECT * FROM EmpDemo WHERE EMPNO = ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setInt(1, empno);
+            ResultSet resultSet = statement.executeQuery();
+
+            if (resultSet.next()) {
+                int empNo = resultSet.getInt("EMPNO");
+                String ename = resultSet.getString("ENAME");
+                String job = resultSet.getString("JOB");
+                int mgr = resultSet.getInt("MGR");
+                LocalDate hireDate = resultSet.getDate("HIREDATE").toLocalDate();
+                double sal = resultSet.getDouble("SAL");
+                double comm = resultSet.getDouble("COMM");
+                int deptNo = resultSet.getInt("DEPTNO");
+
+                employee = new Employee(empNo, ename, job, mgr, hireDate, sal, comm, deptNo);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employee;
+    }
+
+    public static List<Employee> getEmployees(LocalDate startDate, LocalDate endDate) {
+        List<Employee> employees = new ArrayList<>();
+        try {
+            String query = "SELECT * FROM EmpDemo WHERE HIREDATE >= ? AND HIREDATE <= ?";
+            PreparedStatement statement = connection.prepareStatement(query);
+            statement.setDate(1, Date.valueOf(startDate));
+            statement.setDate(2, Date.valueOf(endDate));
+            ResultSet resultSet = statement.executeQuery();
+
+            while (resultSet.next()) {
+                int empNo = resultSet.getInt("EMPNO");
+                String ename = resultSet.getString("ENAME");
+                String job = resultSet.getString("JOB");
+                int mgr = resultSet.getInt("MGR");
+                LocalDate hireDate = resultSet.getDate("HIREDATE").toLocalDate();
+                double sal = resultSet.getDouble("SAL");
+                double comm = resultSet.getDouble("COMM");
+                int deptNo = resultSet.getInt("DEPTNO");
+
+                employees.add(new Employee(empNo, ename, job, mgr, hireDate, sal, comm, deptNo));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return employees;
+    }
+}

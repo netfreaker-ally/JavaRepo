@@ -1,0 +1,46 @@
+package HibernateDemo.DemoXml.Pojo;
+
+import java.io.Serializable;
+import java.time.LocalDate;
+
+public class empProjectComposite  implements Serializable{
+	private int empNo;
+	private int projectId;
+	private LocalDate stdate;
+	
+	public empProjectComposite() {
+		super();
+	}
+
+	public empProjectComposite(int empNo, int projectId, LocalDate stdate) {
+		super();
+		this.empNo = empNo;
+		this.projectId = projectId;
+		this.stdate = stdate;
+	}
+
+	public int getEmpNo() {
+		return empNo;
+	}
+
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
+
+	public int getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+
+	public LocalDate getStdate() {
+		return stdate;
+	}
+
+	public void setStdate(LocalDate stdate) {
+		this.stdate = stdate;
+	}
+	
+}

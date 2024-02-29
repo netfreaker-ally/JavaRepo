@@ -1,0 +1,53 @@
+/**
+ * 
+ */
+package Day2;
+
+/**
+ * @author hanuma.ramavath
+ *
+ */
+import java.util.*;
+public class Book {
+
+	/**
+	 * @param args
+	 */
+	int bookNo;
+	String bookTitle;
+	float price;
+	public void input( int bkNo,String bkTitle,float pricee)
+	{
+		bookNo=bkNo;
+		bookTitle=bkTitle;
+		price=pricee;
+		
+	}
+	public float purchase(int number)
+	{
+		return total_cost(number);
+	}
+	public float total_cost(int number) {
+		return  price*number;
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Book b=new Book(;)
+		System.out.println("Enter book_number: ");
+		int bookNumber=sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter book title: ");
+		String bookTitle=sc.nextLine();
+		System.out.println("Enter price: ");
+		float price=sc.nextFloat();
+		b.input(bookNumber, bookTitle, price);
+		sc.nextLine();
+		System.out.println("Enter number of books: ");
+		int num=sc.nextInt();
+		
+		System.out.println(b.purchase(num););
+		
+	}
+
+}

@@ -1,0 +1,116 @@
+package Assignment9;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+
+
+class ContactBO {
+    public List<Contact> findContactByName(List<Contact> contactList, List<String> names) {
+        List<Contact> result = new ArrayList<>();
+        for (Contact contact : contactList) {
+            if (names.contains(contact.get_name())) {
+                result.add(contact);
+            }
+        }
+        return result;
+    }
+
+    public List<Contact> findContactByDateCreated(List<Contact> contactList, LocalDate dateCreated) {
+        List<Contact> result = new ArrayList<>();
+        for (Contact contact : contactList) {
+            if (contact.get_dateCreated().equals(dateCreated)) {
+                result.add(contact);
+            }
+        }
+        return result;
+    }
+
+    public List<Contact> findContactByEmailDomain(List<Contact> contactList, String domain) {
+        List<Contact> result = new ArrayList<>();
+        for (Contact contact : contactList) {
+            String email = contact.get_email();
+            String substring = email.substring(email.indexOf("@") + 1, email.indexOf("."));
+            if (domain.equalsIgnoreCase(substring)) {
+                result.add(contact);
+            }
+        }
+        return result;
+    }
+}
+
+public class Assignment9Ex3 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter the number of contact details: ");
+        int n = sc.nextInt();
+        sc.nextLine(); // Consume the newline character
+
+        System.out.println("Enter the contact details (comma-separated): ");
+        String str;
+        List<Contact> contactList = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            str = sc.nextLine();
+            contactList.add(Contact.createContact(str));
+        }
+
+        ContactBO contactBO = new ContactBO();
+
+        int choice;
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. Search by Name");
+            System.out.println("2. Search by Date Created");
+            System.out.println("3. Search by Email Domain");
+            System.out.println("4. Exit");
+            System.out.print("Enter your choice: ");
+            choice = sc.nextInt();
+            sc.nextLine(); // Consume the newline character
+
+            switch (choice) {
+                case 1:
+                    System.out.print("Enter the names (comma-separated): ");
+                    String namesInput = sc.nextLine();
+                    String[] namesArr = namesInput.split(",");
+                    List<String> names = new ArrayList<>();
+                    for (String name : namesArr) {
+                        names.add(name.trim());
+                    }
+                    List<Contact> resultByName = contactBO.findContactByName(contactList, names);
+                    printContactList(resultByName);
+                    break;
+                case 2:
+                    System.out.print("Enter the date to search contacts that were created on that date (dd-MM-yyyy): ");
+                    String dateInput = sc.nextLine();
+                    LocalDate dateCreated = LocalDate.parse(dateInput, DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+                    List<Contact> resultByDateCreated = contactBO.findContactByDateCreated(contactList, dateCreated);
+                    printContactList(resultByDateCreated);
+                    break;
+                case 3:
+                    System.out.print("Enter the Email domain to search contacts that have the same email domain: ");
+                    String domain = sc.nextLine();
+                    List<Contact> resultByEmailDomain = contactBO.findContactByEmailDomain(contactList, domain);
+                    printContactList(resultByEmailDomain);
+                    break;
+                case 4:
+                    System.out.println("Exiting...");
+                    break;
+                default:
+                    System.out.println("Invalid choice");
+            }
+        } while (choice != 4);
+    }
+
+    public static void printContactList(List<Contact> contacts) {
+        System.out.println("\nName              Company           Title              Mobile             Alternate Mobile  Email                    Date Created");
+     for (int i = 0; i < contacts.size(); i++) {
+		System.out.println(contacts.get(i).get_name()+" "+contacts.get(i).get_company()+" "+contacts.get(i).get_title()+" "+contacts.get(i).get_mobile()
+				+" "+contacts.get(i).get_alternateMobile()+" "+contacts.get(i).get_dateCreated());
+		
+	}
+        
+    }
+}

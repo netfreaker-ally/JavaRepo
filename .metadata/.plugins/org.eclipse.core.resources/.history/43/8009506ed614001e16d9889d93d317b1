@@ -1,0 +1,15 @@
+<hibernate-mapping>
+  <class name="HibernateDemo.DemoXml.Pojo.projectManyToMany">
+    <id name="projectId">
+      <generator class="assigned"></generator>
+    </id>
+    <property name="projectName" length="25">
+    </property>
+    <property name="stdate" type="java.time.LocalDate">
+      <column name="Start_Date" />
+      <foreign-key name="stdate_fk" references="empProjectComposite" column="stdate" />
+    </property>
+    <property name="eddate">
+    </property>
+  </class>
+</hibernate-mapping>

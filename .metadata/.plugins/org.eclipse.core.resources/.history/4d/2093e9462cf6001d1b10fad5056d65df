@@ -1,0 +1,93 @@
+package LetsTry;
+
+class Subject {
+    private String subjectName;
+    private int marks;
+
+    public Subject(String subjectName, int marks) {
+        this.subjectName = subjectName;
+        this.marks = marks;
+    }
+
+    public int getMarks() {
+        return marks;
+    }
+}
+
+class Student {
+    private int sno;
+    private String sname;
+    private Subject[] subjects;
+
+    public Student(int sno, String sname, Subject[] subjects) {
+        this.sno = sno;
+        this.sname = sname;
+        this.subjects = subjects;
+    }
+
+    public void calculateGrade() {
+        int totalMarks = 0;
+        boolean allPass = true;
+
+        for (Subject subject : subjects) {
+            totalMarks += subject.getMarks();
+            if (subject.getMarks() < 50) {
+                allPass = false;
+                break;
+            }
+        }
+
+        int averageMarks = totalMarks / subjects.length;
+
+        String grade;
+        if (allPass) {
+            if (averageMarks > 80) {
+                grade = "A";
+            } else if (averageMarks > 70) {
+                grade = "B";
+            } else if (averageMarks > 50) {
+                grade = "C";
+            } else {
+                grade = "Fail";
+            }
+        } else {
+            grade = "Fail";
+        }
+
+        displayDetails(totalMarks, averageMarks, grade);
+    }
+
+    private void displayDetails(int totalMarks, int averageMarks, String grade) {
+        System.out.println("Student Name: " + sname);
+        System.out.println("Total Marks: " + totalMarks);
+        System.out.println("Average Marks: " + averageMarks);
+        System.out.println("Grade: " + grade);
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        // Create an array of students
+        Student[] students = new Student[5];
+
+        // Create subjects for student 1
+        Subject[] subjects1 = new Subject[3];
+        subjects1[0] = new Subject("Math", 90);
+        subjects1[1] = new Subject("Science", 85);
+        subjects1[2] = new Subject("English", 70);
+        students[0] = new Student(1, "John", subjects1);
+
+        // Create subjects for student 2
+        Subject[] subjects2 = new Subject[3];
+        subjects2[0] = new Subject("Math", 60);
+        subjects2[1] = new Subject("Science", 75);
+        subjects2[2] = new Subject("English", 80);
+        students[1] = new Student(2, "Alice", subjects2);
+
+        // Calculate grade for each student and display details
+        for (Student student : students) {
+            student.calculateGrade();
+            System.out.println();
+        }
+    }
+}

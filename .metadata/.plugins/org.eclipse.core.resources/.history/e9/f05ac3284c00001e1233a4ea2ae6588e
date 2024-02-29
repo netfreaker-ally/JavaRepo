@@ -1,0 +1,9 @@
+package Day10;
+interface Inft1{
+	public void name();
+		
+	
+}
+public class InterfaceEx {
+
+}

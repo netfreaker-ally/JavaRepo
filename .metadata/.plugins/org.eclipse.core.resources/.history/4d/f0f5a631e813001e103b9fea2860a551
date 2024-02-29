@@ -1,0 +1,24 @@
+package HibernateDemo.Demo.pojo;
+
+public class EmpProjectsId {
+	 private int empNo;
+	  private int projectId;
+	public EmpProjectsId(int empNo, int projectId) {
+		super();
+		this.empNo = empNo;
+		this.projectId = projectId;
+	}
+	public int getEmpNo() {
+		return empNo;
+	}
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	   
+}

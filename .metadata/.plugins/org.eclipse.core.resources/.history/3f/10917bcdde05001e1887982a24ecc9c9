@@ -1,0 +1,65 @@
+package Assignment8;
+import java.util.*;
+
+class Assignment8Example
+{
+	static List<Boolean>  ValidateRegistrationNo(String registrationNo){
+		
+		
+        String[] str = registrationNo.split(" ");
+        List<Boolean> list=new ArrayList<>(str.length);
+        Boolean check;
+		for (int i = 0; i < str.length; i++) {
+			check=false;
+			 if (str.length != 4) {
+		            check=false;
+		        }
+
+		        String st = str[0];
+		        String dist = str[1];
+		        String lett = str[2];
+		        String unique = str[3];
+
+		        if (st.length() != 2 || dist.length() != 2 ||lett.length()>2|| unique.length() < 1 || unique.length() < 4) {
+		            check=false;
+		        }
+
+		        if (!st.matches("[A-Z]+") || !dist.matches("\\d{1,2}") || !lett.matches("[A-Z]+") || !unique.matches("\\d+")) {
+		            check=false;
+		        }
+		        else {
+		        	check=true;
+		        }
+		        if(check==true)
+		        	list.add(true);
+		        else
+		        	list.add(false);
+		        
+		}
+		return list;
+       
+    
+		
+	}
+
+}
+public class Assignment8Ex5 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		System.out.println("Enter Registration Number: ");
+		String registrationNo=sc.nextLine();
+		String[] regArray=registrationNo.split(",");
+		List<Boolean> list=Assignment8Example.ValidateRegistrationNo(registrationNo);
+		for (int i = 0; i < list.size(); i++) {
+			if(list.get(i))
+				System.out.println(regArray[i]+" Valid Registration Number ");
+			else
+				System.out.println(regArray[i]+" InValid Registration Number ");
+
+		}
+		
+	}
+
+}

@@ -1,0 +1,67 @@
+package Day1;
+import java.util.*;
+class Test{
+	private int empId;
+	private String eName;//It is good practice and have to declare variable
+	private String contact;//with small letters and when two words are combined
+	private String emailId;//then second word should start with big letter
+	private int test1;
+	private int test2;
+	void Accept(int eid,String en,String con,String em,int t1,int t2 ) {
+		empId=eid;
+		eName=en;
+		contact=con;
+		test1=t1;
+		test2=t2;
+		emailId=em;
+		
+	}
+	public String print()
+	
+	{
+		String str="EmpId: "+empId+"\n";
+		str=str+"eName: "+eName+"\n";
+		str=str+"eMaildId: "+emailId+"\n";
+		str=str+"contact: "+contact+"\n";
+		str=str+"test1: "+test1+"\n";
+		str=str+"test2: "+test2+"\n";
+		return str;
+		
+	}
+	
+}
+
+public class EncapsulationEx1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Test T=new Test();
+		Test T1=new Test();
+		//System.out.println("Enter empid:");
+		int eid,t1,t2;
+		String en,con,em;
+		eid=sc.nextInt();
+		sc.nextLine();
+		en=sc.nextLine();
+		em=sc.nextLine();
+		con=sc.nextLine();
+		t1=sc.nextInt();
+		t2=sc.nextInt();
+		
+		T.Accept(eid, en, con,em, t1, t2);
+		System.out.println(T.print());
+		System.out.println("Enter details of 2nd object");
+		eid=sc.nextInt();
+		sc.nextLine();
+		en=sc.nextLine();
+		em=sc.nextLine();
+		con=sc.nextLine();
+		t1=sc.nextInt();
+		t2=sc.nextInt();
+		T1.Accept(eid, en, con,em, t1, t2);
+		System.out.println(T1.print());
+		sc.close();
+	}
+
+}

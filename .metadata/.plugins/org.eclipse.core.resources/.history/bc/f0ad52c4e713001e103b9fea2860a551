@@ -1,0 +1,5 @@
+package HibernateDemo.Demo.pojo;
+
+public class EmpProjectsId {
+
+}

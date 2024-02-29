@@ -1,0 +1,55 @@
+package Assignment8;
+import java.util.*;
+
+class Assignment8Example {
+    static List<Boolean> ValidateRegistrationNo(List<String> registrationNos) {
+        List<Boolean> results = new ArrayList<>();
+
+        for (String registrationNo : registrationNos) {
+            String[] str = registrationNo.split(", ", 4);
+            Boolean check = false;
+
+            if (str.length != 4) {
+                check = false;
+            } else {
+                String st = str[0];
+                String dist = str[1];
+                String lett = str[2];
+                String unique = str[3];
+
+                if (st.length() != 2 || dist.length() != 2 || lett.length() > 2 || unique.length() < 1 || unique.length() > 4) {
+                    check = false;
+                }
+
+                if (!st.matches("[A-Z]+") || !dist.matches("\\d{1,2}") || !lett.matches("[A-Z]+") || !unique.matches("\\d{1,4}")) {
+                    check = false;
+                } else {
+                    check = true;
+                }
+            }
+            
+            results.add(check);
+        }
+
+        return results;
+    }
+}
+
+public class Assignment8Ex5 {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("Enter Registration Numbers (separated by spaces): ");
+        String registrationNo = sc.nextLine();
+        List<String> regList = Arrays.asList(registrationNo.split(", "));
+
+        List<Boolean> resultList = Assignment8Example.ValidateRegistrationNo(regList);
+
+        for (int i = 0; i < resultList.size(); i++) {
+            if (resultList.get(i)) {
+                System.out.println(regList.get(i) + " Valid Registration Number");
+            } else {
+                System.out.println(regList.get(i) + " Invalid Registration Number");
+            }
+        }
+    }
+}

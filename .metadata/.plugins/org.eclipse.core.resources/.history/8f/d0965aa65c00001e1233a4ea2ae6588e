@@ -1,0 +1,25 @@
+package Day10;
+interface Iparent{
+	public void method1();
+	int i=100;
+}
+class Cchild implements Iparent{
+
+	@Override
+	public void method1() {
+		// TODO Auto-generated method stub
+		System.out.println("method1");
+	}
+	
+}
+public class InterfaceEx2 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Iparent I=new Cchild();
+		System.out.println(I.i);
+		System.out.println(Iparent.i);
+		System.out.println(Cchild.i);
+	}
+
+}

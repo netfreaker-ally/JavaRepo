@@ -1,0 +1,15 @@
+package DAy7;
+
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+
+public class DateEx3 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		LocalDate L=LocalDate.now();
+		SimpleDateFormat sdf=new SimpleDateFormat("dd-MM=yyyy");
+		System.out.println(sdf.format(L));
+	}
+
+}

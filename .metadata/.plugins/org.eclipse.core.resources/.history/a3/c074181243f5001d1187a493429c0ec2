@@ -1,0 +1,16 @@
+package Day3;
+class Emp{
+	private int empId;
+	private String eName;
+	private double basic;
+	
+}
+public class ArrayExample {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Emp E[] =new Emp[5];
+		System.out.println(E[0]);
+	}
+
+}

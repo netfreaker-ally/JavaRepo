@@ -1,0 +1,67 @@
+package Day3;
+import java.util.*;
+class Employee{
+	public int empId;
+	public String eName;
+	public double basic;
+	
+
+public void Accept(int empId,String eName,double basic) {
+	this.empId=empId;
+	this.eName=eName;
+	this.basic=basic;
+	}
+public String print() {
+	String str="Employess Id: "+empId+"\nEmployee Name: "+eName+"\nBasic: "+basic;
+	return str;
+}
+}
+
+class Project{
+	private int projectId;
+	private String projectDesc;
+	private Employee emps[];
+	public void getProject(int projectId,String projectDesc,Employee[] emps	) {
+		this.projectId=projectId;
+		this.projectDesc=projectDesc;
+		this.emps=emps;
+	}
+	public String printProject() {
+		String str="ProjectId: "+projectId+"\nprojectDesc: "+projectDesc+"\nEmployee Details: ";
+		for (int i = 0; i < emps.length; i++) {
+			str=str+"\nEmployee id: "+emps[i].print();
+		}
+		return str;
+	}
+}
+
+public class ArrayExample2 {
+	public static void main(String[] args) {
+		Project P =new Project();
+		Scanner sc=new Scanner(System.in);
+		int projectId,empId;
+		String projectDesc,eName;
+		double basic;
+		Employee emps[]=new Employee[3];
+		System.out.println("Enter ProjectId: ");
+		projectId=sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter ProjectDesc: ");
+		projectDesc=sc.nextLine();
+		for (int i = 0; i < emps.length; i++) {
+			emps[i]=new Employee();
+			System.out.println("Enter EmployeeId "+i+" th person");
+			empId=sc.nextInt();
+			System.out.println("Enter Employee Name "+i+" th person");
+			sc.nextLine();
+			eName=sc.nextLine();
+			System.out.println("Enter Basic "+i+" th person");
+			basic=sc.nextDouble();
+			emps[i].Accept(empId, eName, basic);
+		}
+		
+		P.getProject(projectId,projectDesc,emps);
+		System.out.println(P.printProject());
+	}
+
+}

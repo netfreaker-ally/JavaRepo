@@ -1,0 +1,120 @@
+package Assignment9;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
+
+class Contact {
+    private String _name;
+    private String _company;
+    private String _title;
+    private String _mobile;
+    private String _alternateMobile;
+    private String _email;
+    private LocalDate _dateCreated;
+
+    public Contact() {
+        // Default constructor
+    }
+
+    public Contact(String _name, String _company, String _title, String _mobile, String _alternateMobile,
+            String _email, LocalDate _dateCreated) {
+        this._name = _name;
+        this._company = _company;
+        this._title = _title;
+        this._mobile = _mobile;
+        this._alternateMobile = _alternateMobile;
+        this._email = _email;
+        this._dateCreated = _dateCreated;
+    }
+
+    public String get_name() {
+        return _name;
+    }
+
+    public String get_company() {
+        return _company;
+    }
+
+    public String get_title() {
+        return _title;
+    }
+
+    public String get_mobile() {
+        return _mobile;
+    }
+
+    public String get_alternateMobile() {
+        return _alternateMobile;
+    }
+
+    public String get_email() {
+        return _email;
+    }
+
+    public LocalDate get_dateCreated() {
+        return _dateCreated;
+    }
+
+    public static Contact createContact(String str) {
+        String[] st = str.split(",");
+        Contact c1 = null;
+        if (st.length == 7) {
+            String nm = st[0];
+            String cmp = st[1];
+            String tit = st[2];
+            String mob = st[3];
+            String altMob = st[4];
+            String em = st[5];
+            LocalDate l = LocalDate.parse(st[6], DateTimeFormatter.ofPattern("dd-MM-yyyy"));
+            c1 = new Contact(nm, cmp, tit, mob, altMob, em, l);
+        }
+        return c1;
+    }
+
+    static TreeMap<String, Integer> GetContactCountForDomain(List<Contact> list) {
+        TreeMap<String, Integer> treeMap = new TreeMap<>();
+        String[] str = new String[list.size()];
+
+        for (int i = 0; i < list.size(); i++) {
+            str[i] = list.get(i).get_email();
+           str[i] = str[i].substring(str[i].indexOf("@") + 1, str[i].indexOf("."));
+
+            if (!treeMap.containsKey(str[i])) {
+                treeMap.put(str[i], 1);
+            } else {
+                treeMap.put(str[i], treeMap.get(str[i]) + 1);
+            }
+        }
+
+        return treeMap;
+    }
+}
+
+public class Assignment9Ex1 {
+
+    public static void main(String[] args) {
+        System.out.println("Enter number of contacts: ");
+        Scanner sc = new Scanner(System.in);
+        int n = sc.nextInt();
+        sc.nextLine(); // Consume the newline character
+        System.out.println("Enter details: ");
+        String str;
+        List<Contact> contactList = new ArrayList<>();
+
+        for (int i = 0; i < n; i++) {
+            str = sc.nextLine();
+            contactList.add(Contact.createContact(str));
+        }
+
+        TreeMap<String, Integer> tM = Contact.GetContactCountForDomain(contactList);
+        System.out.println("Domain Name \t Count");
+        for (Map.Entry<String, Integer> entry : tM.entrySet()) {
+            String key = entry.getKey();
+            Integer val = entry.getValue();
+            System.out.println(key + "\t " + val);
+
+        }
+
+        sc.close();
+    }
+}

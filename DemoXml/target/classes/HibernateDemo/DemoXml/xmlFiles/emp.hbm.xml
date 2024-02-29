@@ -1,0 +1,15 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+  <hibernate-mapping> 
+ <class name="HibernateDemo.DemoXml.Pojo.emp" table="tblemp">
+ <id name="empId">
+  <generator class="assigned"></generator>
+ </id>
+ <property name="eName"  length="25" > </property>
+ <many-to-one name="deptId" class="HibernateDemo.DemoXml.Pojo.dept">
+ <column name="deptId" not-null="true"></column>
+ </many-to-one>
+ 
+ </class>
+ </hibernate-mapping>

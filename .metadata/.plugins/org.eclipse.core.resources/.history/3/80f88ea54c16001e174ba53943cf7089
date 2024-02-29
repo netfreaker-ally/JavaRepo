@@ -1,0 +1,205 @@
+package HibernateDemo.Practice;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+import HibernateDemo.Demo.pojo.ProjectDetails;
+import HibernateDemo.pojoClasses.Category;
+import HibernateDemo.pojoClasses.Product;
+
+import java.util.*;
+import java.util.function.Consumer;
+
+import javax.persistence.TypedQuery;
+
+/**
+ * Hello world!
+ *
+ */
+public class App 
+{
+	static Configuration cfg=null;
+	static SessionFactory sf=null;
+	static Session session=null;
+	static Transaction transaction=null;
+	Scanner scanner=new Scanner(System.in);
+	public static void initialize() {
+		cfg=new Configuration().configure("HibernateDemo/Practice/hibernate.cfg.xml");
+		sf=cfg.buildSessionFactory();
+		session=sf.openSession();
+		transaction=session.beginTransaction();
+	}
+	public void insert() {
+	    System.out.println("Enter number of category: ");
+	    int n = scanner.nextInt();
+	    int categoryId;
+	    String categoryName = null;
+	    Category category[] = new Category[n];
+	    for (int i = 0; i < n; i++) {
+	        System.out.println("Enter category id of " + (i + 1));
+	        categoryId = scanner.nextInt();
+	        scanner.nextLine();
+	        System.out.println("Enter category name of " + (i + 1));
+	        categoryName = scanner.nextLine();
+	        category[i] = new Category(categoryId, categoryName);
+	        session.save(category[i]);
+	    }
+	    transaction.commit();
+
+	    try {
+	        transaction = session.beginTransaction(); 
+
+	        System.out.println("Enter number of Products: ");
+	        int size = scanner.nextInt();
+	        Product product[] = new Product[size];
+	        scanner.nextLine();
+	        int pid;
+	        String pName = null;
+	        int price;
+	        int quantity;
+	        int catId;
+	        for (int i = 0; i < size; i++) {
+	            System.out.println("Enter productid: ");
+	            pid = scanner.nextInt();
+	            scanner.nextLine();
+	            System.out.println("Enter Product name: ");
+	            pName = scanner.nextLine();
+	            System.out.println("Enter Price: ");
+	            price = scanner.nextInt();
+	            scanner.nextLine();
+	            System.out.println("Enter Quantity: ");
+	            quantity = scanner.nextInt();
+	            scanner.nextLine();
+	            boolean check = false;
+	            while (!check) {
+	                try {
+	                    System.out.println("Enter category Id of this product belongs");
+	                    catId = scanner.nextInt();
+	                    scanner.nextLine();
+	                    Category cat = session.get(Category.class, catId);
+	                 
+	                    if (cat != null) {
+	                        product[i] = new Product(pid, pName, price, quantity, cat);
+	                        session.save(product[i]);
+	                        check = true;
+	                    }
+	                } catch (IllegalStateException e) {
+	                    System.out.println("Enter only those category IDs that exist.");
+	                    scanner.nextLine();
+	                }
+	            }
+	        }
+
+	        transaction.commit();
+	    } catch (Exception e) {
+	        System.out.println("Error " + e.getMessage());
+	        transaction.rollback();
+	    }
+	}
+	@SuppressWarnings("unchecked")
+	public List<Product> retrieve(int productIdd){
+		TypedQuery query= session.getNamedQuery("getbyProductId");
+    	
+    	query.setParameter("pdid",productIdd);
+		List<Product> list=query.getResultList();
+		return list;
+		
+	}
+    public List<Product> fetchData(int catId){
+    	
+    	TypedQuery query2=session.getNamedQuery("getbyCategoryId");
+    	Category category = session.get(Category.class, catId);
+    	query2.setParameter("pcid", category);
+    	List<Product> list2=query2.getResultList();
+    	return list2;
+    	
+    }
+	public boolean updatePrice(int productId,int price) {
+		boolean check=false;
+		try {
+			Product product=session.get(Product.class, productId);
+			product.setPrice(price);
+			session.update(product);
+			transaction.commit();
+			check=true;
+		} catch (Exception e) {
+			// TODO: handle exception
+			System.out.println("Error while updating "+e.getMessage());
+			
+		}
+		return check;
+	}
+   public boolean updateCategory(int productId,int categoryId2) {
+	  // Category cat1=session.get(Category.class, categoryId);
+	   boolean check=false;
+	   try {
+		  //Product cat2=session.get(Product.class, productId);
+		  
+		   Product product=session.get(Product.class, productId);
+		   Category c=session.get(Category.class,product.getCategoryId().getId());
+		   product.setCategoryId(c);
+		   session.update(product);
+		   transaction.commit();
+		   check=true;
+		   
+	} catch (Exception e) {
+		// TODO: handle exception
+		System.out.println("Error while updating "+e.getMessage());
+	}	   
+	   return check;	
+}
+   public static List<Product> getDetails() {
+		List<Product> productdetails=session.createQuery("FROM Product", Product.class).getResultList(); 		
+				return productdetails;	
+	}
+   public static void main( String[] args )
+    {
+    	Scanner sc=new Scanner(System.in);
+    	initialize();
+    	App app=new App();
+//    	app.insert();
+//    	System.out.println("Enter product id for which you want to retrieve data: ");
+//    	int productIdd=sc.nextInt();
+//    	sc.nextLine();
+//    	List<Product> list=app.retrieve(productIdd);
+//    	list.forEach(new Consumer<Product>() {
+//			public void accept(Product i) {
+//				System.out.println("Product Name: "+i.getName()+"ProductId: "+i.getId());
+//			}
+//		});
+//    	System.out.println("Enter category id for which you want to retrieve all the products ");
+//    	int catid=sc.nextInt();
+//    	sc.nextLine();
+//    	List<Product> list2=app.fetchData(catid);
+//    	list2.forEach(new Consumer<Product>() {
+//			public void accept(Product p) {
+//				System.out.println("Product Name: "+p.getName()+"ProductId: "+p.getId());
+//			}
+//		});
+//    	System.out.println("Enter for which product you want to modify the price: ");
+//    	int userInput=sc.nextInt();
+//    	sc.nextLine();
+//    	System.out.println("Enter the price: ");
+//    	int userInput2=sc.nextInt();
+//    	sc.nextLine();
+//    	if(app.updatePrice(userInput, userInput2)) {
+//    		System.out.println("Updated Succesfully of id "+userInput+"to price"+userInput2);
+//    	}
+    	System.out.println("Enter producId for which you want to change category: ");
+    	int userinput3=sc.nextInt();
+    	sc.nextLine();
+    	int userinput4=sc.nextInt();
+    	sc.nextLine();
+    	if(app.updateCategory(userinput3, userinput4)) {
+    		System.out.println("Updated Succesfully of id "+userinput3+" to category "+userinput4);
+    	}
+//    	List<Product> list= app.getDetails();
+//    	for (Product i : list) {
+//    		System.out.println("Product Id: "+i.getId()+"productName: "+i.getName()+"Price: "+i.getPrice()+"Quantity: "+i.getQuantity()+"Category: "+i.getCategoryId().getId()+"\n");
+//		}
+    	sc.close();
+    	session.close();
+    }
+}

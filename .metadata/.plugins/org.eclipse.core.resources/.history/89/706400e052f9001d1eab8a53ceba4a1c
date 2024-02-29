@@ -1,0 +1,190 @@
+package LetsTry;
+
+
+//PracticeInheritance2
+import java.util.Scanner;
+
+class Customer {
+  private int _customerId;
+  private String _customerName;
+  private String _customerType;
+  private String _mobile;
+  private Address _permanentAddress;
+
+  public Customer(int _customerId, String _customerName, String _customerType, String _mobile,
+                  Address _permanentAddress) {
+      this._customerId = _customerId;
+      this._customerName = _customerName;
+      this._customerType = _customerType;
+      this._mobile = _mobile;
+      this._permanentAddress = _permanentAddress;
+  }
+
+  public Customer() {
+  }
+
+  public int getCustomerId() {
+      return _customerId;
+  }
+
+  public String getCustomerName() {
+      return _customerName;
+  }
+
+  public String getCustomerType() {
+      return _customerType;
+  }
+
+  public String getMobile() {
+      return _mobile;
+  }
+
+  public Address getPermanentAddress() {
+      return _permanentAddress;
+  }
+
+  public void setPermanentAddress(Address address) {
+      _permanentAddress = address;
+  }
+}
+
+class Address {
+  private String _hNo;
+  private String _street;
+  private String _city;
+  private String _zipcode;
+  private String _country;
+
+  public Address(String _hNo, String _street, String _city, String _zipcode, String _country) {
+      this._hNo = _hNo;
+      this._street = _street;
+      this._city = _city;
+      this._zipcode = _zipcode;
+      this._country = _country;
+  }
+
+  public String getHNo() {
+      return _hNo;
+  }
+
+  public String getStreet() {
+      return _street;
+  }
+
+  public String getCity() {
+      return _city;
+  }
+
+  public String getZipCode() {
+      return _zipcode;
+  }
+
+  public String getCountry() {
+      return _country;
+  }
+}
+
+class CustomerBO {
+  private Customer[] CList;
+
+  private boolean Validate(Customer customer) {
+      String customerType = customer.getCustomerType();
+      String zipCode = customer.getPermanentAddress().getZipCode();
+
+      if (customerType.equalsIgnoreCase("Premium") || customerType.equalsIgnoreCase("Guest")|| zipCode.length() == 5) {
+          return true;
+      }
+      return false;
+  }
+
+  public void AddCustomer(Customer customer) {
+      if (CList == null) {
+          CList = new Customer[5];
+      }
+      if (Validate(customer)) {
+          int i = 0;
+          while (i < CList.length && CList[i] != null) {
+              i++;
+          }
+          if (i < CList.length) {
+              CList[i] = customer;
+          } else {
+              System.out.println("Customer List is full.");
+          }
+      }
+  }
+
+  public Customer[] getCustomers() {
+      return CList;
+  }
+}
+
+public class Practice {
+  public static void main(String[] args) {
+      Scanner sc = new Scanner(System.in);
+      System.out.println("Enter Y or N");
+      String check = sc.nextLine();
+      int customerId;
+      String customerName;
+      String customerType;
+      String mobile;
+      String hNo;
+      String street;
+      String city;
+      String zipCode;
+      String country;
+      CustomerBO cbo = new CustomerBO();
+      while (check.equals("Y")) {
+          System.out.println("Enter customerId");
+          customerId = sc.nextInt();
+          sc.nextLine();
+          System.out.println("Enter customerName");
+          customerName = sc.nextLine();
+          System.out.println("Enter customerType");
+          customerType = sc.nextLine();
+          System.out.println("Enter Mobile");
+          mobile = sc.nextLine();
+          System.out.println("PermanentAddress");
+          System.out.println("Enter HNO");
+          hNo = sc.nextLine();
+          System.out.println("Enter Street");
+          street = sc.nextLine();
+          System.out.println("Enter City");
+          city = sc.nextLine();
+          System.out.println("Enter ZipCode");
+          zipCode = sc.nextLine();
+          System.out.println("Enter Country");
+          country = sc.nextLine();
+
+          Customer customer = new Customer(customerId, customerName, customerType, mobile, null);
+          Address ad=  new Address(hNo, street, city, zipCode, country);
+          customer.setPermanentAddress(ad);
+          cbo.AddCustomer(customer);
+
+          System.out.println("Customer Details added successfully");
+          System.out.println("Enter the Choice Y/N");
+          check = sc.nextLine();
+      }
+
+      Customer[] customers = cbo.getCustomers();
+
+      System.out.println("Customer Details:");
+      for (Customer customer : customers) {
+          if (customer != null) {
+              System.out.println("Customer ID: " + customer.getCustomerId());
+              System.out.println("Customer Name: " + customer.getCustomerName());
+              System.out.println("Customer Type: " + customer.getCustomerType());
+              System.out.println("Mobile: " + customer.getMobile());
+              Address address = customer.getPermanentAddress();
+              System.out.println("Address: ");
+              System.out.println("   HNO: " + address.getHNo());
+              System.out.println("   Street: " + address.getStreet());
+              System.out.println("   City: " + address.getCity());
+              System.out.println("   ZipCode: " + address.getZipCode());
+              System.out.println("   Country: " + address.getCountry());
+              System.out.println();
+          }
+      }
+  }
+}
+

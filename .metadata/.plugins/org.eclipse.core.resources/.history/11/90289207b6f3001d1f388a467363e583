@@ -1,0 +1,8 @@
+package Day1;
+public class Example {
+	Example Ex=new Example();
+    public  void main(String[] args) {
+        System.out.println("Hello, World!");
+    }
+
+}

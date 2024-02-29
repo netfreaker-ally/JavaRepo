@@ -1,0 +1,125 @@
+package Day3;
+import java.util.*;
+class Employee{
+	private int empId;
+	private String eName;
+	private double basic;
+	private String grade;
+
+public void Accept(int empId,String eName,double basic,String grade) { 
+	this.empId=empId;
+	this.eName=eName;
+	this.basic=basic;
+	this.grade=grade;
+	}
+public String print() {
+	String str="Employess Id: "+empId+"\nEmployee Name: "+eName+"\nBasic: "+basic;
+	return str;
+}
+public void Increment(String appraisal) {
+	if(appraisal.equals("A+"))
+	{
+		if(grade.equals("G1")) {
+			basic=basic+basic*20/100;
+		}
+		else if(grade.equals("G2")) {
+			basic=basic+basic*12/100;
+		}else {
+			basic=basic+basic*06/100;
+		}
+	}
+	else
+	{
+		if(grade.equals("G1")) {
+			basic=basic+basic*18/100;
+		}
+		else if(grade.equals("G2")) {
+			basic=basic+basic*10/100;
+		}else {
+			basic=basic+basic*05/100;
+		}
+		
+	}
+}
+}
+
+class Project{
+	private int projectId;
+	private String projectDesc;
+	private String appraisal;
+	private Employee emps[];
+	public void getProject(int projectId,String projectDesc,Employee[] emps,String appraisal	) {
+		this.projectId=projectId;
+		this.projectDesc=projectDesc;
+		this.emps=emps;
+		this.appraisal=appraisal;
+	}
+	public String printProject() {
+		String str="ProjectId: "+projectId+"\nprojectDesc: "+projectDesc+"\nEmployee Details: "+"\n";
+		for (int i = 0; i < emps.length; i++) {
+			str=str+" "+emps[i].print()+"\n";
+		}
+		
+		return str;
+	}
+	public void Calculate() {
+		for (int i = 0; i < emps.length; i++) {
+			emps[i].Increment(appraisal);
+		}
+	}
+}
+
+public class ArrayExample2 {
+	public static void main(String[] args) {
+		Project P[] =new Project[2];
+		Scanner sc=new Scanner(System.in);
+		int projectId,empId;
+		String projectDesc,eName,appraisal,grade;
+		double basic;
+		int n;
+		Employee emps[];
+		
+		for (int i = 0; i < P.length; i++) {
+			P[i]=new Project();
+			System.out.println("Enter details of Project: "+i+1);
+			System.out.println("Enter the number of employees: ");
+			n=sc.nextInt();
+			emps=new Employee[n];
+			System.out.println("Enter ProjectId: ");
+			projectId=sc.nextInt();
+			sc.nextLine();
+			System.out.println("Enter ProjectDesc: ");
+			projectDesc=sc.nextLine();
+			System.out.println("Enter appraisal A+ or B or anything: ");
+			appraisal=sc.nextLine();
+			P[i].getProject(projectId, projectDesc, emps, appraisal);
+			for (int j = 0; j < emps.length; i++) {
+				emps[i]=new Employee();
+				System.out.println("Enter EmployeeId "+j+" th person");
+				empId=sc.nextInt();
+				System.out.println("Enter Employee Name "+j+" th person");
+				sc.nextLine();
+				eName=sc.nextLine();
+				System.out.println("Enter Basic "+j+" th person");
+				
+				basic=sc.nextDouble();
+				sc.nextLine();
+				System.out.println("Enter grade "+j+" th person");
+				grade=sc.nextLine();
+				emps[j].Accept(empId, eName, basic,grade);
+			}
+		}
+		
+		
+		//P.getProject(projectId,projectDesc,emps,appraisal);
+		for (int i = 0; i < P.length; i++) {
+			System.out.println("Before Appraisal of Project: ");
+			System.out.println(P[i].printProject());
+			P[i].Calculate();
+			System.out.println("After Appraisal of Project:");
+			System.out.println(P[i].printProject());
+		}
+		
+	}
+
+}

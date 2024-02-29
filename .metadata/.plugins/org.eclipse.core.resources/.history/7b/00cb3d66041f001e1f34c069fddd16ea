@@ -1,0 +1,5 @@
+package HibernateDemo.pojoClasses;
+
+public class dept {
+
+}

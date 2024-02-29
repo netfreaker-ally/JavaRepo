@@ -1,0 +1,40 @@
+package Day1;
+import java.util.*;
+class Test{
+	int empId;
+	String eName;//It is good practice and have to declare variable
+	String contact;//with small letters and when two words are combined
+	String emailId;//then second word should start with big letter
+	int test1;
+	int test2;
+	
+	
+}
+public class EncapsulationEx1 {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Test T=new Test();
+		Test T1=new Test();
+		System.out.println("Enter empid:");
+		T.empId=sc.nextInt();
+		System.out.println("Enter ename: ");
+		T.eName=sc.next();
+		System.out.println("Enter contact:" );
+		T.contact=sc.next();
+		System.out.println("the output are:");
+		System.out.println(T.eName);
+		System.out.println("Enter empid:");
+		T1.empId=sc.nextInt();
+		System.out.println("Enter ename: ");
+		T1.eName=sc.next();
+		System.out.println("Enter contact:" );
+		T1.contact=sc.next();
+		System.out.println("the output are for T!:");
+		System.out.println(T1.eName);
+		System.out.println(T1.empId);
+		System.out.println(T1.contact);
+	}
+
+}

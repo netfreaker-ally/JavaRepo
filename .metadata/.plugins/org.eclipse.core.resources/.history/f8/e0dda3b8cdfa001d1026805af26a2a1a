@@ -1,0 +1,48 @@
+
+package Day8;
+
+import java.time.LocalDate; 
+import java.time.format.DateTimeFormatter;
+import java.util.Scanner;
+
+public class ArraysdateEx {
+
+    public static void main(String[] args) {
+
+        //String[] dateArray = {"2022-07-21", "2021-05-27", "2023-05-02", "2024-05-23", "2001-05-20"};
+      //  int[] numberArray = {100, 200, 10, 30, 20};
+    	System.out.println("Enter no.of dates : ");
+    	 Scanner sc = new Scanner(System.in);
+    	int n=sc.nextInt();
+    	LocalDate[] dtArray=new LocalDate[n];
+    	int[] nmArray=new int[n];
+    	 String s;
+    	
+    	DateTimeFormatter d=DateTimeFormatter.ofPattern("dd-MM-yyyy");
+    	for (int i = 0; i < nmArray.length; i++) {
+    		 System.out.print("Enter a date dd-MM-yyyy: ");
+    		 s=sc.nextLine();
+    		 dtArray[i]=LocalDate.parse(s,d);
+    		 sc.nextLine();
+    		 System.out.println("Enter number corresponding to this date: ");
+    		nmArray[i]= sc.nextInt();
+    		 
+		}
+       
+        int sum = 0;
+        System.out.print("Enter a date dd-MM-yyyy: in which you have to check ");
+        String dt=sc.nextLine();
+        LocalDate ipdate=LocalDate.parse(dt);
+        for (int i = 0; i < dtArray.length; i++) {
+            LocalDate l =dtArray[i];
+            if (l.isAfter(ipdate)) {
+                sum += nmArray[i];
+            }
+        }
+
+        System.out.println("Sum of numbers greater than the given date: " + sum);
+    }
+}
+
+
+

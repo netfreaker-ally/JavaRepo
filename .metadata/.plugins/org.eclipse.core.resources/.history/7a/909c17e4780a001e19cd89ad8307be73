@@ -1,0 +1,46 @@
+package JDBC;
+
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Types;
+
+import oracle.jdbc.OracleTypes;
+
+public class updateEx {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Connection Con=dbConnection.getConnection();
+		CallableStatement cstmt=null;
+		try {
+			cstmt=Con.prepareCall("{call sp_fetch(?,?,?,?)}");
+			cstmt.setInt(1, 10);
+			cstmt.registerOutParameter(2, Types.VARCHAR);
+			cstmt.setString(3, "Netfreaker");
+			cstmt.registerOutParameter(4,OracleTypes.CURSOR );
+			cstmt.execute();
+			System.out.println(cstmt.getString(2));
+			ResultSet r=(ResultSet) cstmt.getObject(4);
+			while (r.next()) {
+				System.out.println(r.getInt(1)+" "+r.getString(2));
+				
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		finally {
+			try {
+				Con.close();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+	}
+
+}

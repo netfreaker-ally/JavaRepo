@@ -1,0 +1,65 @@
+package HibernateDemo.Practice;
+import java.util.*;
+
+import javax.persistence.TypedQuery;
+
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.Transaction;
+import org.hibernate.cfg.Configuration;
+
+public class JavaPracticalMain {
+	static Configuration cfg=null;
+	static SessionFactory sf=null;
+	static Session session=null;
+	static Transaction transaction=null;
+	Scanner scanner=new Scanner(System.in);
+
+	public static void initialize() {
+		cfg=new Configuration().configure("HibernateDemo/Practice/hibernate.cfg.xml");
+		sf=cfg.buildSessionFactory();
+		session=sf.openSession();
+		transaction=session.beginTransaction();
+	}
+	
+	public List<Object[]> byJob() {
+		  @SuppressWarnings("unchecked")
+		TypedQuery<Object[]> query= session.createQuery("SELECT job, COUNT(*) AS count "
+		  		+ " FROM empdemo"
+		  		+ " GROUP BY job "
+		  		+ "    Object[].class");
+		List<Object[]> results = query.getResultList();
+		session.close();
+		return results;
+		 
+	}
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		JavaPracticalMain jp=new JavaPracticalMain();
+		jp.initialize();
+		Scanner scanner=new Scanner(System.in);
+		System.out.println("Enter 1 for deptname and 2 for job: ");
+		int choice=scanner.nextInt();
+		scanner.nextLine();
+		
+		switch (choice) {
+		case 1:
+			List<Object[]> result=jp.byJob();
+			for (Object[] r : result) {
+				  String job = (String) r[0];
+				  int count =  Integer.valueOf((String) r[1]);
+
+				  System.out.println("Job: " + job + ", Count: " + count);
+				}
+			break;
+		case 2:
+			
+			break;
+
+		default:
+			break;
+		}
+
+	}
+
+}

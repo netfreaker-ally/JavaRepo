@@ -1,0 +1,36 @@
+package Day2;
+import java.util.*;
+public class Employee {
+	private int empNo;
+	private String eName;
+	private int basic;
+	public void Accept(int empNo,String eName,int basic) {
+		empNo=empNo;
+		eName=eName;
+		basic=basic;
+		System.out.println(basic);
+	}
+	public void Calculate() {
+		//System.out.println(basic+(basic*10/100)+(basic*40/100)+(basic*5/100));
+		//float c=basic+(basic*10/100)+(basic*40/100)+(basic*5/100);
+		int c=(basic*10)/100;
+		System.out.println(c);
+	}
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+		Scanner sc=new Scanner(System.in);
+		Employee E=new Employee();
+		System.out.println("Enter emoloyee number: ");
+		int eno=sc.nextInt();
+		sc.nextLine();
+		System.out.println("Enter emoloyee name: ");
+		String en=sc.nextLine();
+		System.out.println("Enter basic: ");
+		int basic=sc.nextInt();
+		E.Accept(eno, en, basic);
+		E.Calculate();
+
+	}
+
+}

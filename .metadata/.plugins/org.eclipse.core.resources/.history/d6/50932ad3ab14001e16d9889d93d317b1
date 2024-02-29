@@ -1,0 +1,26 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+	<class name="HibernateDemo.DemoXml.Pojo.employeProject">
+		<composite-id name="compositeKey" class="HibernateDemo.DemoXml.Pojo.empProjectComposite">
+			<key-many-to-one name="empNo"
+				class="HibernateDemo.DemoXml.Pojo.EmpManyToMany">
+				<column name="Employee_NO"></column>
+			</key-many-to-one>
+			<key-many-to-one name="projectId"
+				class="HibernateDemo.DemoXml.Pojo.projectManyToMany">
+				<column name="Project_ID"></column>
+			</key-many-to-one>
+			<key-property name="stdate"></key-property>
+		</composite-id>
+		
+		<many-to-one name="stdate" class="HibernateDemo.DemoXml.Pojo.projectManyToMany" cascade="">
+			<column name="stDate"></column>
+		</many-to-one>
+		
+		<property name="edDate">
+			<column name="End_Date"></column>
+		</property>
+	</class>
+</hibernate-mapping>

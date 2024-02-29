@@ -1,0 +1,51 @@
+package HibernateDemo.DemoXml.Pojo;
+
+import java.time.LocalDate;
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+
+public class projectManyToMany {
+	
+	private int projectId;
+	private String projectName;
+	private LocalDate stDate;
+	private LocalDate eddate;
+	public projectManyToMany() {
+		super();
+	}
+	public projectManyToMany(int projectId, String projectName, LocalDate stDate, LocalDate eddate) {
+		super();
+		this.projectId = projectId;
+		this.projectName = projectName;
+		this.stDate = stDate;
+		this.eddate = eddate;
+	}
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	public String getProjectName() {
+		return projectName;
+	}
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+	public LocalDate getStDate() {
+		return stDate;
+	}
+	public void setStdate(LocalDate stDate) {
+		this.stDate = stDate;
+	}
+	public LocalDate getEddate() {
+		return eddate;
+	}
+	public void setEddate(LocalDate eddate) {
+		this.eddate = eddate;
+	}
+		
+}

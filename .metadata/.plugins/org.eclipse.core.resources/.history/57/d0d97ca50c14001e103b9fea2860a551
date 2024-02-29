@@ -1,0 +1,14 @@
+<!DOCTYPE hibernate-mapping PUBLIC 
+    "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+    "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+  <hibernate-mapping> 
+ <class name="HibernateDemo.DemoXml.Pojo.employeProject" >
+ <composite-id name="compositeKey" class="HibernateDemo.DemoXml.Pojo.empProjectComposite">
+ <key-property name="empNo" column="Employeee_NO"> </key-property>
+ <key-property name="projectId" column="project_id"> </key-property>
+ <key-property name="stDate" column="startDate"> </key-property>
+  
+ </composite-id>
+ <property name="edDate"></property>
+ </class>
+ </hibernate-mapping>

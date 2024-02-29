@@ -1,0 +1,46 @@
+package HibernateDemo.DemoXml.Pojo;
+
+import java.time.LocalDate;
+
+public class employeProject {
+	private int empNo;
+	private int projectId;
+	private LocalDate stDate;
+	private LocalDate edDate;
+	public employeProject() {
+		super();
+	}
+	public employeProject(int empNo, int projectId, LocalDate stDate, LocalDate edDate) {
+		super();
+		this.empNo = empNo;
+		this.projectId = projectId;
+		this.stDate = stDate;
+		this.edDate = edDate;
+	}
+	public int getEmpNo() {
+		return empNo;
+	}
+	public void setEmpNo(int empNo) {
+		this.empNo = empNo;
+	}
+	public int getProjectId() {
+		return projectId;
+	}
+	public void setProjectId(int projectId) {
+		this.projectId = projectId;
+	}
+	public LocalDate getStDate() {
+		return stDate;
+	}
+	public void setStDate(LocalDate stDate) {
+		this.stDate = stDate;
+	}
+	public LocalDate getEdDate() {
+		return edDate;
+	}
+	public void setEdDate(LocalDate edDate) {
+		this.edDate = edDate;
+	}
+	
+
+}
